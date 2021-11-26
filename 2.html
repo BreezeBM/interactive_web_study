@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style>
+      body {
+        position: relative;
+        background-color: black;
+        overflow: hidden;
+      }
+      h1 {
+        color: #fff;
+      }
+      /* .cursor_item {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: lightpink;
+        top: 0;
+        left: 0;
+        margin: -50px 0 0 -50px;
+        transition: all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      } */
+      .human {
+        position: absolute;
+        width: 1000px;
+        left: calc(50% - 150px);
+        z-index: 100;
+      }
+      .bg {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: 0;
+      }
+    </style>
+    <script>
+      let human;
+      let bg;
+      let x = 0;
+      let y = 0;
+      let mx = 0;
+      let my = 0;
+      let speed = 0.02; // 마우스가 따라오는 속도
+
+      window.onload = function () {
+        human = document.getElementsByClassName("human")[0];
+        bg = document.getElementsByClassName("bg")[0];
+        window.addEventListener("mousemove", mouseFunc, false);
+
+        function mouseFunc(e) {
+          // 화면의 가운데가 0이된다.
+          x = e.clientX - window.innerWidth;
+          y = e.clientY;
+          -window.innerHeight;
+        }
+        loop();
+      };
+      function loop() {
+        mx += (x - mx) * speed;
+        my += (y - my) * speed;
+
+        // 조금씩 움직이게 하려면 많이 나눠주면 된다.
+        // human.style.transform = "translate(" + mx + "px, " + my + "px)";
+        // - 값을 주면 반대로 움직인다.
+        human.style.transform = "translate(" + mx / 3 + "px, " + my / 3 + "px)";
+        bg.style.transform =
+          "translate(" + -mx / 10 + "px, " + -my / 10 + "px)";
+
+        window.requestAnimationFrame(loop);
+      }
+    </script>
+  </head>
+  <body>
+    <!-- <div class="cursor_item"></div> -->
+    <div>
+      <img src="./img/space.jpg" class="bg" alt="우주" />
+      <img src="./img/astronaut.png" class="human" alt="사람" />
+    </div>
+  </body>
+</html>
